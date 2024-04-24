@@ -1,0 +1,30 @@
+version: '3'
+
+services:  
+  rabbitmq:
+    image: rabbitmq:3.11-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      
+
+# image: Chỉ ra hình ảnh Docker được sử dụng là RabbitMQ phiên bản 3.11 với tính năng quản lý web được bật.
+# environment: Đặt biến môi trường cho RabbitMQ:
+#   RABBITMQ_DEFAULT_USER: guest - Tên người dùng mặc định
+#   RABBITMQ_DEFAULT_PASS: guest - Mật khẩu cho người dùng mặc định
+# healthcheck: Định nghĩa kiểm tra để đảm bảo container luôn chạy:
+#   test: Sử dụng lệnh rabbitmq-diagnostics để ping server
+#   interval: Kiểm tra mỗi 30 giây
+#   timeout: Thời gian chờ đợi tối đa là 30 giây
+#   retries: Số lần kiểm tra lại là 3 lần
+# ports: Chuyển tiếp cổng:
+#   5672:5672 - Cổng mặc định cho giao thức AMQP
+#   15672:15672 - Cổng quản lý web
